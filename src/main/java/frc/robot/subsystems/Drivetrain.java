@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
@@ -22,11 +22,11 @@ public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	// Talons
-	Talon leftFrontTalon = null;
-	Talon leftBackTalon = null;
-	Talon rightFrontTalon = null;
-	Talon rightBackTalon = null;
+	// Victors
+	Victor leftFrontVictor = null;
+	Victor leftBackVictor = null;
+	Victor rightFrontVictor = null;
+	Victor rightBackVictor = null;
 
 	DifferentialDrive differentialDrive = null;
 
@@ -34,14 +34,14 @@ public class Drivetrain extends Subsystem {
 	Encoder driveEncoder = null;
 
 	public Drivetrain() {
-		// Talons
-		leftFrontTalon = new Talon(RobotMap.DRIVETRAIN_LEFT_FRONT_TALON);
-		leftBackTalon = new Talon(RobotMap.DRIVETRAIN_LEFT_BACK_TALON);
-		rightFrontTalon = new Talon(RobotMap.DRIVETRAIN_RIGHT_FRONT_TALON);
-		rightBackTalon = new Talon(RobotMap.DRIVETRAIN_RIGHT_BACK_TALON);
+		// Victors
+		leftFrontVictor = new Victor(RobotMap.DRIVETRAIN_LEFT_FRONT);
+		leftBackVictor = new Victor(RobotMap.DRIVETRAIN_LEFT_BACK);
+		rightFrontVictor = new Victor(RobotMap.DRIVETRAIN_RIGHT_FRONT);
+		rightBackVictor = new Victor(RobotMap.DRIVETRAIN_RIGHT_BACK);
 
-		SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFrontTalon, leftBackTalon);
-		SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightFrontTalon, rightBackTalon);
+		SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFrontVictor, leftBackVictor);
+		SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightFrontVictor, rightBackVictor);
 
 		differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
