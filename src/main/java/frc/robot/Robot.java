@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
     String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-    
+    //checking if the color matches presets for the targets on wheel
     if (match.color == kBlueTarget) {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
@@ -96,7 +96,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
     runWithColor(colorString);
-    //Driving with controllers
+
+    //Driving with controllers using tilt of the controllers to set speed
     m_myRobot2.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
     m_myRobot1.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
 
@@ -110,7 +111,8 @@ public class Robot extends TimedRobot {
 
     
   }
-
+//not working
+/*
 public void updateBrakes(){
   //Right Trigger
   if(m_rightStick.getRawButton(1)){
@@ -126,14 +128,17 @@ public void updateBrakes(){
     leftBrakes = false;
   }
 }
+*/
 
 //Checking buttons on left Controller.
 private void updateColor(){
+  //not yet coded
   if(m_rightStick.getRawButtonPressed(1)){
 
   }
 }
 
+//runs motor until specified color is reahed needs to be updateable
   private void runWithColor(String color)
   {
     
