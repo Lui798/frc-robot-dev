@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.OI;
 
 public class ColorMotorSystem
 {
     private SpeedController colorMotor;
-    private Joystick m_colorStick;
   
     private ColorDetection colorDetection;
     private final int COLOR_AMOUNT = 8;
@@ -29,7 +29,6 @@ public class ColorMotorSystem
     {
         colorMotor = new PWMVictorSPX(4);
         colorDetection = new ColorDetection();
-        m_colorStick = new Joystick(2); 
 
         colorsPassed = 0;
         currentStatus = "IDLE";
@@ -40,31 +39,31 @@ public class ColorMotorSystem
 
     private boolean checkButtonPress()
     {
-        if (m_colorStick.getRawButtonPressed(blueColorCodeButton))
+        if (OI.colorStick.getRawButtonPressed(blueColorCodeButton))
         {
             colorSelection = "Blue";
             return true;
         }
        
-        if (m_colorStick.getRawButtonPressed(redColorCodeButton))
+        if (OI.colorStick.getRawButtonPressed(redColorCodeButton))
         {
             colorSelection = "Red";
             return true;
         } 
         
-        if (m_colorStick.getRawButtonPressed(yellowColorCodeButton))
+        if (OI.colorStick.getRawButtonPressed(yellowColorCodeButton))
         {
             colorSelection = "Yellow";
             return true; 
         } 
         
-        if (m_colorStick.getRawButtonPressed(greenColorCodeButton))
+        if (OI.colorStick.getRawButtonPressed(greenColorCodeButton))
         {
             colorSelection = "Green";
             return true;
         } 
         
-        if (m_colorStick.getRawButtonPressed(spinColorCodeButton))
+        if (OI.colorStick.getRawButtonPressed(spinColorCodeButton))
         {
             colorsPassed = 0;
             colorSelection = "";
