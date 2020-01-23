@@ -7,148 +7,128 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
-//import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
-
+import frc.robot.subsystems.ColorDetection;
 
 /**
  * This is a demo program showing the use of the RobotDrive class, specifically
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  private DifferentialDrive m_myRobot1;
-  private DifferentialDrive m_myRobot2;
-  private SpeedController m_myRobot3;
+  private DifferentialDrive wheelsMotor1;
+  private DifferentialDrive wheelsMotor2;
+  private SpeedController colorMotor;
   private Joystick m_leftStick;
   private Joystick m_rightStick;
   private Joystick m_colorStick;
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
-
-  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-  private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-  private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-
-  public boolean leftBrakes = false;
-  public boolean rightBrakes = false;
-  public String colorSelection;
-
+  private final ColorDetection colorDetection = new ColorDetection();
+  private final int ColorAmount = 8;
+  private int colorsPassed = 0;
+  private String colorSelection;
+  private String currentColor;
+  private String prevColor;
+  private boolean spin;
 
   @Override
   public void robotInit() {
-    m_myRobot1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
-    m_myRobot2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
-    m_myRobot3 = new PWMVictorSPX(4);
+    wheelsMotor1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
+    wheelsMotor2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
+    colorMotor = new PWMVictorSPX(4);
     m_leftStick = new Joystick(0);
     m_rightStick = new Joystick(1);
-    m_colorStick = new Joystick(2);
-    m_colorMatcher.addColorMatch(kBlueTarget);
-    m_colorMatcher.addColorMatch(kGreenTarget);
-    m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);   
-    
+    m_colorStick = new Joystick(2); 
+
+    colorSelection = "";
+    currentColor = "";
+    prevColor = "";
+    spin = false;
   }
 
+  //An automatic update method.
   @Override
-  public void teleopPeriodic() {
-    updateBrakes();
-    updateColor();
-    Color detectedColor = m_colorSensor.getColor();
+  public void teleopPeriodic() 
+  {
+    currentColor = colorDetection.runDetection();
 
-    String colorString;
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    //Driving with controllers
+    wheelsMotor2.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
+    wheelsMotor1.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
+    
+    int blueColorCodeButton = 1;
+    int redColorCodeButton = 2;
+    int yellowColorCodeButton = 3;
+    int greenColorCodeButton = 4;
+    int spinColorCodeButton = 5;
 
-    //checking if the color matches presets for the targets on wheel
-    if (match.color == kBlueTarget) {
-      colorString = "Blue";
-    } else if (match.color == kRedTarget) {
-      colorString = "Red";
-    } else if (match.color == kGreenTarget) {
-      colorString = "Green";
-    } else if (match.color == kYellowTarget) {
-      colorString = "Yellow";
-    } else {
-      colorString = "Unknown";
+    if (m_colorStick.getRawButtonPressed(blueColorCodeButton))
+    {
+      colorSelection = "Blue";
+      spin = true;
+    }
+    else if (m_colorStick.getRawButtonPressed(redColorCodeButton))
+    {
+      colorSelection = "Red";
+      spin = true;
+    } 
+    else if (m_colorStick.getRawButtonPressed(yellowColorCodeButton))
+    {
+      colorSelection = "Yellow";
+      spin = true;
+    } 
+    else if (m_colorStick.getRawButtonPressed(greenColorCodeButton))
+    {
+      colorSelection = "Green";
+      spin = true;
+    } 
+    else if (m_colorStick.getRawButtonPressed(spinColorCodeButton))
+    {
+      colorsPassed = 0;
+      colorSelection = "";
+      spin = true;
+    } 
+    
+    if (spin)
+    {
+      colorMotor.set(1.0);
+      //This means that it should rotate between 3-5 times
+      if (colorSelection.equals(""))
+      {
+        //If the sensor sees anything other than RGBY ignore it
+        if (!currentColor.equals("Unknown"))
+        {
+          //If the previously detected color is not the same as the current
+          if (!prevColor.equals(currentColor))
+          {
+            colorsPassed++;
+            System.out.println(currentColor + ", " + colorsPassed);
+          }
+          //If it has spun 3.5 times, stop it
+          if (colorsPassed >= ColorAmount * 3.5)
+          {
+            colorMotor.stopMotor();
+            spin = false;
+          }
+        }
+      }
+      else if (colorDetection.isColorMatch(colorSelection))
+      {
+        colorMotor.stopMotor();
+        colorSelection = "";
+        spin = false;
+      }
     }
 
-    /**
-     * Open Smart Dashboard or Shuffleboard to see the color detected by the 
-     * sensor.
-     */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
-    runWithColor(colorString);
-
-    //Driving with controllers using tilt of the controllers to set speed
-    m_myRobot2.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
-    m_myRobot1.tankDrive(-m_leftStick.getY(), -(m_rightStick.getY()*.951));
-
-    //Using color sensor to see if it should move
-    if(colorString != "Blue"){
-      
-     //m_myRobot1.tankDrive(.5,.5);
-      //m_myRobot2.tankDrive(.5,.5);
-    }
-    
-
-    
+    prevColor = currentColor;
   }
-//not working
-/*
-public void updateBrakes(){
-  //Right Trigger
-  if(m_rightStick.getRawButton(1)){
-    rightBrakes = true;
-  }
-  else {rightBrakes = false;}
 
-  //Left trigger
-  if(m_leftStick.getRawButton(1)){
-    leftBrakes =true;
-  }
-  else{
-    leftBrakes = false;
-  }
-}
-*/
-
-//Checking buttons on left Controller.
-private void updateColor(){
-  //not yet coded
-  if(m_rightStick.getRawButtonPressed(1)){
-
-  }
-}
-
-//runs motor until specified color is reahed needs to be updateable
-  private void runWithColor(String color)
+  public void updateColorMotor(int rawColorCodeButton)
   {
     
-    m_myRobot3.set(1);
-    while (color == "Red")
-    {
-      m_myRobot3.set(0);
-      
-    }
   }
-
-
 }
