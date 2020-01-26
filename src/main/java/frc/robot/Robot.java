@@ -7,32 +7,38 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.ColorDetection;
+import frc.robot.subsystems.SolenoidSystem;
 
 /**
  * This is a demo program showing the use of the RobotDrive class, specifically
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  private DifferentialDrive m_myRobot1;
-  private DifferentialDrive m_myRobot2;
-  private Joystick m_leftStick;
-  private Joystick m_rightStick;
+  private DifferentialDrive wheelsMotor1;
+  private DifferentialDrive wheelsMotor2;
+
+  SolenoidSystem solenoidSystem = new SolenoidSystem(0, 1);
 
   @Override
   public void robotInit() {
-    m_myRobot1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
-    m_myRobot2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
-    m_leftStick = new Joystick(0);
-    m_rightStick = new Joystick(1);
+    wheelsMotor1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
+    wheelsMotor2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
   }
 
+  //An automatic update method.
   @Override
-  public void teleopPeriodic() {
-    m_myRobot1.tankDrive(m_leftStick.getY(), m_rightStick.getY());
-    m_myRobot2.tankDrive(m_leftStick.getY(), m_rightStick.getY());
+  public void teleopPeriodic() 
+  {
+    //Driving with controllers
+    wheelsMotor2.tankDrive(-OI.leftStick.getY(), -(OI.rightStick.getY()*.951));
+    wheelsMotor1.tankDrive(-OI.leftStick.getY(), -(OI.rightStick.getY()*.951));
+
+    solenoidSystem.update();
   }
 }

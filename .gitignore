@@ -44,6 +44,9 @@
 # BlueJ files
 *.ctxt
 
+# IntelliJ Files
+.idea
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -155,6 +158,7 @@ gradle-app.setting
 .project
 .settings/
 bin/
+imgui.ini
 
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
