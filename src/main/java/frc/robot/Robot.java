@@ -23,11 +23,13 @@ public class Robot extends TimedRobot
 {
   SolenoidSystem solenoidSystem;
   DriveSystem driveSystem;
+  ColorMotorSystem colorMotorSystem;
 
   @Override
   public void robotInit() 
   {
     driveSystem = new DriveSystem();
+    colorMotorSystem = new ColorMotorSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -35,6 +37,8 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
+    OI.update();
     driveSystem.update();
+    colorMotorSystem.update();
   }
 }

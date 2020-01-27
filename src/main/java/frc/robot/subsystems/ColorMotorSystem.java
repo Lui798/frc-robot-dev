@@ -45,7 +45,6 @@ public class ColorMotorSystem
     //Use in update() function down below. 
     private boolean scanColorButton()
     {
-        System.out.println("IDLE: GETTING COLOR BUTTON INPUTS"); //Debugging
         if (motorStatus.equals("IDLE"))
         {
             if (OI.isButtonPressed(OI.BLUE_CODE)) colorSelection = "Blue";
@@ -54,8 +53,8 @@ public class ColorMotorSystem
             else if (OI.isButtonPressed(OI.GREEN_CODE)) colorSelection = "Green";
             if (!colorSelection.equals("")) 
             {   
-                System.out.println("COLOR HAVE BEEN SELECTED: " + colorSelection);
-                System.out.println("BEGIN PREPING FOR MOTOR SPIN...");
+            //    System.out.println("COLOR HAVE BEEN SELECTED: " + colorSelection);
+            //    System.out.println("BEGIN PREPING FOR MOTOR SPIN...");
                 return true;
             }
         }
@@ -66,9 +65,8 @@ public class ColorMotorSystem
     //Use in update() function down below.
     private void spinThreeTimes()
     {
-        System.out.println("SPIN_3_TIMES: Current Color Detected - " + 
-                            currentColor + "; Prev Color Detected - " + prevColor);
-        System.out.println("Number of Color Passed - " + colorsPassed); //Debugging
+        //System.out.println(currentColor);
+        //System.out.println("Number of Color Passed - " + colorsPassed); //Debugging
         currentColor = COLOR_DETECTION.runDetection();
         COLOR_MOTOR.set(1.0);
 
@@ -80,7 +78,6 @@ public class ColorMotorSystem
             {
                 colorsPassed++;
                 prevColor = currentColor;
-                System.out.println(currentColor + ", " + colorsPassed);
             }
             //If it has spun 3.5 times (passing 28 colors), stop it
             if (colorsPassed >= COLOR_AMOUNT * 3.5)
@@ -112,7 +109,7 @@ public class ColorMotorSystem
     // update function, updates color motor status every cycle/tick/loop of teleopPeriodic() function in Robot.java
     public void update()
     {
-        System.out.println("------------- New Color Motor System Loop ---------------");
+        //System.out.println("------------- New Color Motor System Loop ---------------");
         if(scanColorButton()) motorStatus = "PREP_ON_STANBY";
         if(motorStatus.equals("PREP_ON_STANBY"))
         {
@@ -120,7 +117,7 @@ public class ColorMotorSystem
             currentColor = COLOR_DETECTION.runDetection();
             prevColor = COLOR_DETECTION.runDetection();
             motorStatus = "SPIN_3_TIMES";
-            System.out.println("SPIN_3_TIMES ACTION INITIATED!");
+          //  System.out.println("SPIN_3_TIMES ACTION INITIATED!");
         }
         if (motorStatus.equals("SPIN_3_TIMES")) spinThreeTimes();
         if (motorStatus.equals("SPIN_TO_SELECTED_COLOR")) spinToColorSeleted();
