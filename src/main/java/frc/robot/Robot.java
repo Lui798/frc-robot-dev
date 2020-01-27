@@ -10,35 +10,31 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.subsystems.ColorDetection;
+import frc.robot.subsystems.ColorMotorSystem;
+import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.SolenoidSystem;
 
-/**
- * This is a demo program showing the use of the RobotDrive class, specifically
- * it contains the code necessary to operate a robot with tank drive.
- */
-public class Robot extends TimedRobot {
-  private DifferentialDrive wheelsMotor1;
-  private DifferentialDrive wheelsMotor2;
-
-  SolenoidSystem solenoidSystem = new SolenoidSystem(0, 1);
+/*
+  The Robot Class.
+  This is technically your true 'Main' class.
+  Every classes that you program must go in here for it to run.
+*/
+public class Robot extends TimedRobot 
+{
+  SolenoidSystem solenoidSystem;
+  DriveSystem driveSystem;
 
   @Override
-  public void robotInit() {
-    wheelsMotor1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
-    wheelsMotor2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
+  public void robotInit() 
+  {
+    driveSystem = new DriveSystem();
   }
 
-  //An automatic update method.
+  //An automatic update method, provided by WPILIB
+  //Runs every cycle/loop/tick
   @Override
   public void teleopPeriodic() 
   {
-    //Driving with controllers
-    wheelsMotor2.tankDrive(-OI.leftStick.getY(), -(OI.rightStick.getY()*.951));
-    wheelsMotor1.tankDrive(-OI.leftStick.getY(), -(OI.rightStick.getY()*.951));
-
-    solenoidSystem.update();
+    driveSystem.update();
   }
 }

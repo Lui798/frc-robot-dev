@@ -6,7 +6,12 @@ import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 
-public class ColorDetection
+/* 
+    A color detection system to detect color using color sensor.
+    It's not really a system. It is more like a state class to optimize code and make it look cleaner. (DRY)
+    It is used in ColorMotorSystem.java and probably nowhere else.
+*/
+public class ColorDetectionSystem
 {
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
@@ -18,7 +23,7 @@ public class ColorDetection
     private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
     private String colorString;
 
-    public ColorDetection()
+    public ColorDetectionSystem()
     {
         m_colorMatcher.addColorMatch(kBlueTarget);
         m_colorMatcher.addColorMatch(kGreenTarget);
