@@ -18,6 +18,8 @@ public class OI {
     public static final int RED_CODE = 2;
     public static final int YELLOW_CODE = 3;
     public static final int GREEN_CODE = 4;
+    public static final int PNEU_FORWARD_CODE = 5;
+    public static final int PNEU_BACKWARD_CODE = 6;
 
     //Since index starts at 0, using the codes above as index needs to subtract 1.
     private static Button[] buttons = new Button[]
@@ -25,7 +27,9 @@ public class OI {
         new Button(), //Blue
         new Button(), //Red
         new Button(), //Yellow
-        new Button() //Green
+        new Button(), //Green
+        new Button(),
+        new Button()
     };
 
     //Getting the inputs of the joystick and update the variables

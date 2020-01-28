@@ -30,6 +30,7 @@ public class Robot extends TimedRobot
   {
     driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
+    solenoidSystem = new SolenoidSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -40,5 +41,6 @@ public class Robot extends TimedRobot
     OI.update();
     driveSystem.update();
     colorMotorSystem.update();
+    solenoidSystem.update();
   }
 }
