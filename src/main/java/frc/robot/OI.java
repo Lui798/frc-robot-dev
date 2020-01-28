@@ -37,7 +37,7 @@ public class OI {
             buttons[i].setReleaseState(colorStick.getRawButtonReleased(i + 1));
         }
 
-        runDebug();
+        //runDebug();
     }
 
     //Getting button presses on colorStick Joystick.
@@ -64,7 +64,7 @@ public class OI {
     //Runs debug to check what button is pressed/released/hold.
     private static void runDebug()
     {
-        System.out.print("----------- New Loop -------------");
+        //System.out.print("----------- New Loop -------------");
         for (int i = 0; i < buttons.length; i++)
         {
             if (buttons[i].isPressed()) System.out.println("Button " + i + " is just pressed!");

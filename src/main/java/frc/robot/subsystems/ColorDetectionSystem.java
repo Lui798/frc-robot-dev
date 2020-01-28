@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import frc.robot.Debug;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
@@ -17,24 +18,27 @@ public class ColorDetectionSystem
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     private final ColorMatch m_colorMatcher = new ColorMatch();
 
-    private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-    private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-    private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-    private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+    private final Color BLUE_TARGET = ColorMatch.makeColor(0.143, 0.452, 0.429);
+    private final Color GREEN_TARGET = ColorMatch.makeColor(0.267, 0.499, 0.240);
+    private final Color RED_TARGET = ColorMatch.makeColor(0.525, 0.355, 0.120);
+    private final Color YELLOW_TARGET = ColorMatch.makeColor(0.361, 0.524, 0.113);
+    private final Color WHITE_TARGET = ColorMatch.makeColor(0.38, 0.18, 0.436);
     private String colorString;
 
     public ColorDetectionSystem()
     {
-        m_colorMatcher.addColorMatch(kBlueTarget);
-        m_colorMatcher.addColorMatch(kGreenTarget);
-        m_colorMatcher.addColorMatch(kRedTarget);
-        m_colorMatcher.addColorMatch(kYellowTarget);  
+        m_colorMatcher.addColorMatch(BLUE_TARGET);
+        m_colorMatcher.addColorMatch(GREEN_TARGET);
+        m_colorMatcher.addColorMatch(RED_TARGET);
+        m_colorMatcher.addColorMatch(YELLOW_TARGET);  
+        m_colorMatcher.addColorMatch(WHITE_TARGET);   
     }
 
     //Checking if the detected color in the colorString matches the intended color.
     public boolean isColorMatch(String intendedColor)
     {
-        return intendedColor == colorString;
+        runDetection();
+        return intendedColor.equals(colorString);
     }
 
     //Running color detection. Should be in the teleopPeriodic method for automatic update.
@@ -43,22 +47,20 @@ public class ColorDetectionSystem
     { 
         Color detectedColor = m_colorSensor.getColor();
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-        
-        System.out.println(match.color.red + ", " + match.color.blue + ", " + match.color.green + ", ");
 
-        if (match.color == kBlueTarget) 
+        if (match.color == BLUE_TARGET) 
         {
             colorString = "Blue";
         } 
-        else if (match.color == kRedTarget) 
+        else if (match.color == RED_TARGET) 
         {
             colorString = "Red";
         } 
-        else if (match.color == kGreenTarget) 
+        else if (match.color == GREEN_TARGET) 
         {
             colorString = "Green";
         } 
-        else if (match.color == kYellowTarget) 
+        else if (match.color == YELLOW_TARGET) 
         {
             colorString = "Yellow";
         } 
@@ -66,6 +68,8 @@ public class ColorDetectionSystem
         {
             colorString = "Unknown";
         }
+
+        Debug.printOnce(colorString + ": " + detectedColor.red + ", " + detectedColor.green + ", " + detectedColor.blue);
 
         return colorString;
     }
