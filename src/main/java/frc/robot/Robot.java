@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.SolenoidSystem;
+import frc.robot.subsystems.ObjectDetection;
 
 /*
   The Robot Class.
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
+    objectDetectionSystem = new ObjectDetection();
     driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
     solenoidSystem = new SolenoidSystem();
