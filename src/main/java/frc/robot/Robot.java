@@ -7,13 +7,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.ObjectDetectionSystem;
 import frc.robot.subsystems.SolenoidSystem;
-import frc.robot.subsystems.ObjectDetection;
 
 /*
   The Robot Class.
@@ -25,11 +23,12 @@ public class Robot extends TimedRobot
   SolenoidSystem solenoidSystem;
   DriveSystem driveSystem;
   ColorMotorSystem colorMotorSystem;
+  ObjectDetectionSystem objectDetectionSystem;
 
   @Override
   public void robotInit() 
   {
-    objectDetectionSystem = new ObjectDetection();
+    objectDetectionSystem = new ObjectDetectionSystem();
     driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
     solenoidSystem = new SolenoidSystem();
@@ -44,5 +43,6 @@ public class Robot extends TimedRobot
     driveSystem.update();
     colorMotorSystem.update();
     solenoidSystem.update();
+    objectDetectionSystem.update();
   }
 }
