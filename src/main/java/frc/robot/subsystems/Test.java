@@ -94,7 +94,7 @@ public class Test extends TimedRobot {
    * This function implements a simple method of generating driving and steering commands
    * based on the tracking data from a limelight camera.
    */
-  public void Update_Limelight_Tracking()
+  /*public void Update_Limelight_Tracking()
   {
         // These numbers must be tuned for your Robot!  Be careful!
         final double STEER_K = 0.03;                    // how hard to turn toward the target
@@ -130,5 +130,16 @@ public class Test extends TimedRobot {
           drive_cmd = MAX_DRIVE;
         }
         m_LimelightDriveCommand = drive_cmd;
+  } */
+  public void Update_Limelight_Tracking()
+  {   
+    double hasValidTarget = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    double horzOffsetCrossToTarget = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    double vertOffsetCrossToTarget = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+
+    if(hasValidTarget >= 1) {
+      System.out.println("test");
+    }
   }
 }
