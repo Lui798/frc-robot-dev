@@ -28,7 +28,7 @@ public class DriveSystem
     //Pretty obvious what this function does. Run this in the Robot.java teleopPeriodic() function to run the robot.
     public void update()
     {
-        wheelsMotor2.tankDrive(-OI.leftStick.getY() * SPEED_MULTIPLIER, -(OI.rightStick.getY() * SPEED_MULTIPLIER));
-        wheelsMotor1.tankDrive(-OI.leftStick.getY() * SPEED_MULTIPLIER, -(OI.rightStick.getY() * SPEED_MULTIPLIER));
+        wheelsMotor2.tankDrive(-OI.LEFT_STICK.getY() * SPEED_MULTIPLIER, -(OI.RIGHT_STICK.getY() * SPEED_MULTIPLIER));
+        wheelsMotor1.tankDrive(-OI.LEFT_STICK.getY() * SPEED_MULTIPLIER, -(OI.RIGHT_STICK.getY() * SPEED_MULTIPLIER));
     }
 }

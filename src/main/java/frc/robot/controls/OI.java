@@ -1,7 +1,6 @@
 package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.controls.Button;
 
 //OI class: A control system class
 //OI class checks control inputs such as joysticks and buttons and update the variables accordingly.
@@ -10,16 +9,16 @@ import frc.robot.controls.Button;
 public class OI {
 
     //Joystick takes in the port number? <-- Not very sure, ask the builders or even the instructors to know more.
-    public static final Joystick colorStick = new Joystick(2);
-    public static final Joystick leftStick = new Joystick(0);
-    public static final Joystick rightStick = new Joystick(1);
+    public static final Joystick COLOR_STICK = new Joystick(2);
+    public static final Joystick LEFT_STICK = new Joystick(0);
+    public static final Joystick RIGHT_STICK = new Joystick(1);
 
-    public static final Button BLUE_BUTTON = new Button(colorStick, 1);
-    public static final Button RED_BUTTON = new Button(colorStick, 2);
-    public static final Button YELLOW_BUTTON = new Button(colorStick, 3);
-    public static final Button GREEN_BUTTON = new Button(colorStick, 4);
-    public static final Button PNEU_FORWARD_BUTTON = new Button(colorStick, 5);
-    public static final Button PNEU_BACKWARD_BUTTON = new Button(colorStick, 6);
+    public static final Button BLUE_BUTTON = new Button(COLOR_STICK, 1);
+    public static final Button RED_BUTTON = new Button(COLOR_STICK, 2);
+    public static final Button YELLOW_BUTTON = new Button(COLOR_STICK, 3);
+    public static final Button GREEN_BUTTON = new Button(COLOR_STICK, 4);
+    public static final Button PNEU_FORWARD_BUTTON = new Button(COLOR_STICK, 5);
+    public static final Button PNEU_BACKWARD_BUTTON = new Button(COLOR_STICK, 6);
 
 
     //Since index starts at 0, using the codes above as index needs to subtract 1.
