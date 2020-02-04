@@ -1,5 +1,5 @@
 package frc.robot.subsystems;
-import frc.robot.Debug;
+import frc.robot.util.Debug;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;

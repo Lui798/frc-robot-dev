@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-import frc.robot.OI;
+import frc.robot.controls.OI;
 
 //A drive system.
 //To do what? Drive the robot, of course!

@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.OI;
+import frc.robot.controls.OI;
 
 /*
     A color motor system to turn that color motor.
