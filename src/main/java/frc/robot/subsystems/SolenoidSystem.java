@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.Debug;
-import frc.robot.OI;
+import frc.robot.util.Debug;
+import frc.robot.controls.OI;
 
 public class SolenoidSystem 
 {
