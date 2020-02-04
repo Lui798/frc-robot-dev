@@ -28,10 +28,11 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
+
     objectDetectionSystem = new ObjectDetectionSystem();
-  //  driveSystem = new DriveSystem();
-  //  colorMotorSystem = new ColorMotorSystem();
-  //  solenoidSystem = new SolenoidSystem();
+    driveSystem = new DriveSystem();
+    colorMotorSystem = new ColorMotorSystem();
+    solenoidSystem = new SolenoidSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -40,9 +41,10 @@ public class Robot extends TimedRobot
   public void teleopPeriodic() 
   {
     OI.update();
-   // driveSystem.update();
-   // colorMotorSystem.update();
-    //solenoidSystem.update();
+
+    driveSystem.update();
+    colorMotorSystem.update();
+    solenoidSystem.update();
     objectDetectionSystem.update();
   }
 }
