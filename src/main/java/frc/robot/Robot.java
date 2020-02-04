@@ -23,12 +23,13 @@ public class Robot extends TimedRobot
   SolenoidSystem solenoidSystem;
   DriveSystem driveSystem;
   ColorMotorSystem colorMotorSystem;
- // ObjectDetectionSystem objectDetectionSystem;
+  ObjectDetectionSystem objectDetectionSystem;
 
   @Override
   public void robotInit() 
   {
-    //objectDetectionSystem = new ObjectDetectionSystem();
+
+    objectDetectionSystem = new ObjectDetectionSystem();
     driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
     solenoidSystem = new SolenoidSystem();
@@ -40,9 +41,10 @@ public class Robot extends TimedRobot
   public void teleopPeriodic() 
   {
     OI.update();
+
     driveSystem.update();
     colorMotorSystem.update();
     solenoidSystem.update();
-    //objectDetectionSystem.update();
+    objectDetectionSystem.update();
   }
 }
