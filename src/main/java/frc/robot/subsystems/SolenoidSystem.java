@@ -32,8 +32,8 @@ public class SolenoidSystem
 
     private boolean scanSolenoidButton() 
     {
-        if (OI.isButtonPressed(OI.PNEU_BACKWARD_CODE)) reverse();
-        if (OI.isButtonPressed(OI.PNEU_FORWARD_CODE)) forward();
+        if (OI.PNEU_BACKWARD_BUTTON.isPressed()) reverse();
+        if (OI.PNEU_FORWARD_BUTTON.isPressed()) forward();
         if (OI.colorStick.getPOV() == 0)
         {
             Debug.printOnce(": " + OI.colorStick.getPOV());
