@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Debug;
 
 public class ObjectDetectionSystem {
 
@@ -30,8 +31,10 @@ public class ObjectDetectionSystem {
         validTarget = tv.getDouble(0.0);
 
         //post to smart dashboard periodically
-        SmartDashboard.putNumber("LimelightX", x);
-        SmartDashboard.putNumber("LimelightY", y);
-        SmartDashboard.putNumber("LimelightArea", area);
+        Debug.printOnce("LimelightX" + x + "\n LimelightY" + y + "\n LimelightArea" + area + " \n ValidTarget"+ validTarget);
+        
+        if (validTarget==1.0) {
+            System.out.println("Found target, Value: " + validTarget);
+        }
     }
 }
