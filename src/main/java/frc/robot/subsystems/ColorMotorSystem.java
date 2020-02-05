@@ -5,9 +5,21 @@ import edu.wpi.first.wpilibj.SpeedController;
 import frc.robot.OI;
 
 /*
-    A color motor system to turn that color motor.
+        Idle: motor not doing anything, trying to get a color button input
+        PrepOnStandby: reseting variables, motor on standby
+        SpinThreeTimes: motor starts to spin the color wheel 3 times
+        SpinToSelectedColor: motor starts to spin to selected color from color button input.
+    */
+enum MotorStatus
+{
+    Idle,
+    PrepOnStandby,
+    SpinThreeTimes,
+    SpinToSelectedColor
+}
 
-    ****Game Description Goes Here****
+/*
+    A color motor system to turn that color motor.
 
     It is used in Robot.java and probably nowhere else.
 */
@@ -22,19 +34,12 @@ public class ColorMotorSystem
     private String currentColor;
     private String prevColor;
 
-    /*
-        There are 3 statuses for motorStatus
-        IDLE: motor not doing anything, trying to get a color button input
-        PREP_ON_STANBY: reseting variables, motor on standby
-        SPIN_3_TIMES: motor starts to spin the color wheel 3 times
-        SPIN_TO_SELECTED_COLOR: motor starts to spin to selected color from color button input.
-    */
-    private String motorStatus;
+    private MotorStatus status;
 
     public ColorMotorSystem()
     {
         colorsPassed = 0;
-        motorStatus = "IDLE";
+        status = MotorStatus.Idle;
         colorSelection = "";
         currentColor = "";
         prevColor = "";
@@ -45,7 +50,7 @@ public class ColorMotorSystem
     //Use in update() function down below. 
     private boolean scanColorButton()
     {
-        if (motorStatus.equals("IDLE"))
+        if (status == MotorStatus.Idle)
         {
             if (OI.BLUE_BUTTON.isPressed()) colorSelection = "Blue";
             else if (OI.RED_BUTTON.isPressed()) colorSelection = "Red";
@@ -84,7 +89,7 @@ public class ColorMotorSystem
             {
                 COLOR_MOTOR.stopMotor();
                 System.out.println("SPIN_3_TIMES ACTION ENDED!");
-                motorStatus = "SPIN_TO_SELECTED_COLOR";
+                status = MotorStatus.SpinToSelectedColor;
             }
         }
     }
@@ -102,7 +107,7 @@ public class ColorMotorSystem
         {
             COLOR_MOTOR.stopMotor();
             colorSelection = "";
-            motorStatus = "IDLE";
+            status = MotorStatus.Idle;
         }
     }
 
@@ -110,16 +115,16 @@ public class ColorMotorSystem
     public void update()
     {
         //System.out.println("------------- New Color Motor System Loop ---------------");
-        if(scanColorButton()) motorStatus = "PREP_ON_STANBY";
-        if(motorStatus.equals("PREP_ON_STANBY"))
+        if(scanColorButton()) status = MotorStatus.PrepOnStandby;
+        if(status == MotorStatus.PrepOnStandby)
         {
             colorsPassed = 0;  
             currentColor = COLOR_DETECTION.runDetection();
             prevColor = COLOR_DETECTION.runDetection();
-            motorStatus = "SPIN_3_TIMES";
+            status = MotorStatus.SpinThreeTimes;
           //  System.out.println("SPIN_3_TIMES ACTION INITIATED!");
         }
-        if (motorStatus.equals("SPIN_3_TIMES")) spinThreeTimes();
-        if (motorStatus.equals("SPIN_TO_SELECTED_COLOR")) spinToColorSeleted();
+        if (status == MotorStatus.SpinThreeTimes) spinThreeTimes();
+        if (status == MotorStatus.SpinToSelectedColor) spinToColorSeleted();
     }
 }
