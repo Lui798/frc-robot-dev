@@ -8,9 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.controls.OI;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.ObjectDetectionSystem;
 import frc.robot.subsystems.SolenoidSystem;
 
 /*
@@ -28,6 +28,7 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
+
     objectDetectionSystem = new ObjectDetectionSystem();
     driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot
   public void teleopPeriodic() 
   {
     OI.update();
+
     driveSystem.update();
     colorMotorSystem.update();
     solenoidSystem.update();

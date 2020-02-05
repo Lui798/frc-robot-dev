@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.OI;
+import frc.robot.controls.OI;
 
 /*
     A color motor system to turn that color motor.
@@ -47,10 +47,10 @@ public class ColorMotorSystem
     {
         if (motorStatus.equals("IDLE"))
         {
-            if (OI.isButtonPressed(OI.BLUE_CODE)) colorSelection = "Blue";
-            else if (OI.isButtonPressed(OI.RED_CODE)) colorSelection = "Red";
-            else if (OI.isButtonPressed(OI.YELLOW_CODE)) colorSelection = "Yellow";
-            else if (OI.isButtonPressed(OI.GREEN_CODE)) colorSelection = "Green";
+            if (OI.BLUE_BUTTON.isPressed()) colorSelection = "Blue";
+            else if (OI.RED_BUTTON.isPressed()) colorSelection = "Red";
+            else if (OI.YELLOW_BUTTON.isPressed()) colorSelection = "Yellow";
+            else if (OI.GREEN_BUTTON.isPressed()) colorSelection = "Green";
             if (!colorSelection.equals("")) 
             {   
             //    System.out.println("COLOR HAVE BEEN SELECTED: " + colorSelection);
