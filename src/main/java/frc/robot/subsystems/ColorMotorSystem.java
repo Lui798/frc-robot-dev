@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.OI;
+import frc.robot.controls.OI;
 
 /*
         Idle: motor not doing anything, trying to get a color button input

@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.Debug;
-import frc.robot.OI;
+import frc.robot.util.Debug;
+import frc.robot.controls.OI;
 
 public class SolenoidSystem 
 {
@@ -34,9 +34,9 @@ public class SolenoidSystem
     {
         if (OI.PNEU_BACKWARD_BUTTON.isPressed()) reverse();
         if (OI.PNEU_FORWARD_BUTTON.isPressed()) forward();
-        if (OI.colorStick.getPOV() == 0)
+        if (OI.COLOR_STICK.getPOV() == 0)
         {
-            Debug.printOnce(": " + OI.colorStick.getPOV());
+            Debug.printOnce(": " + OI.COLOR_STICK.getPOV());
             SOLENOID_CONTROL_MOTOR.set(.5);
         } 
         // if (OI.colorStick.getPOV() == 180) 
