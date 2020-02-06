@@ -13,7 +13,6 @@ import frc.robot.subsystems.ObjectDetectionSystem;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.SolenoidSystem;
-import frc.robot.subsystems.ObjectDetectionSystem;
 
 /*
   The Robot Class.
@@ -32,9 +31,9 @@ public class Robot extends TimedRobot
   {
 
     objectDetectionSystem = new ObjectDetectionSystem();
-    driveSystem = new DriveSystem();
+   // driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
-    solenoidSystem = new SolenoidSystem();
+    // solenoidSystem = new SolenoidSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -44,9 +43,9 @@ public class Robot extends TimedRobot
   {
     OI.update();
 
-    driveSystem.update();
+    //driveSystem.update();
     colorMotorSystem.update();
-    solenoidSystem.update();
+    // solenoidSystem.update();
     objectDetectionSystem.update();
   }
 }
