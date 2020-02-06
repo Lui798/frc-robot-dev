@@ -1,6 +1,7 @@
 package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.ControlModule;
 
 //OI class: A control system class
 //OI class checks control inputs such as joysticks and buttons and update the variables accordingly.
@@ -20,7 +21,6 @@ public class OI {
     public static final Button PNEU_FORWARD_BUTTON = new Button(COLOR_STICK, 5);
     public static final Button PNEU_BACKWARD_BUTTON = new Button(COLOR_STICK, 6);
 
-
     //Since index starts at 0, using the codes above as index needs to subtract 1.
     private static Button[] buttons = new Button[]
     {
@@ -35,6 +35,7 @@ public class OI {
     //Getting the inputs of the joystick and update the variables
     public static void update()
     {
+        System.out.println(COLOR_STICK.getTrigger());
         for (int i = 0; i < buttons.length; i++) 
         {
             buttons[i].setStates();
