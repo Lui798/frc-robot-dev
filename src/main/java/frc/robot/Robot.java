@@ -9,10 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.controls.OI;
+import frc.robot.subsystems.ObjectDetectionSystem;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.SolenoidSystem;
-import frc.robot.subsystems.ObjectDetectionSystem;
 
 /*
   The Robot Class.
@@ -29,7 +29,9 @@ public class Robot extends TimedRobot
   {
 
     objectDetectionSystem = new ObjectDetectionSystem();
+   // driveSystem = new DriveSystem();
     colorMotorSystem = new ColorMotorSystem();
+    // solenoidSystem = new SolenoidSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -39,9 +41,9 @@ public class Robot extends TimedRobot
   {
     OI.update();
 
-    DriveSystem.update();
+    //driveSystem.update();
     colorMotorSystem.update();
-    SolenoidSystem.update();
+    // solenoidSystem.update();
     objectDetectionSystem.update();
   }
 }
