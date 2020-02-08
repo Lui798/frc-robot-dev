@@ -30,7 +30,7 @@ public class Robot extends TimedRobot
 
     objectDetectionSystem = new ObjectDetectionSystem();
    // driveSystem = new DriveSystem();
-    colorMotorSystem = new ColorMotorSystem();
+    // colorMotorSystem = new ColorMotorSystem();
     // solenoidSystem = new SolenoidSystem();
   }
 
@@ -42,7 +42,7 @@ public class Robot extends TimedRobot
     OI.update();
 
     //driveSystem.update();
-    colorMotorSystem.update();
+    // colorMotorSystem.update();
     // solenoidSystem.update();
     objectDetectionSystem.update();
   }
