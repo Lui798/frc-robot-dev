@@ -21,8 +21,6 @@ import frc.robot.subsystems.SolenoidSystem;
 */
 public class Robot extends TimedRobot 
 {
-  SolenoidSystem solenoidSystem;
-  DriveSystem driveSystem;
   ColorMotorSystem colorMotorSystem;
   ObjectDetectionSystem objectDetectionSystem;
 

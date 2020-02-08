@@ -6,31 +6,28 @@ import edu.wpi.first.wpilibj.SpeedController;
 import frc.robot.util.Debug;
 import frc.robot.controls.OI;
 
+
 public class SolenoidSystem 
 {
-    private final DoubleSolenoid SOLENOID = new DoubleSolenoid(0, 1);
-    private final SpeedController SOLENOID_CONTROL_MOTOR = new PWMVictorSPX(7);
-
-    public SolenoidSystem()
-    {}
+    private static final DoubleSolenoid SOLENOID = new DoubleSolenoid(0, 1);
+    private static final SpeedController SOLENOID_CONTROL_MOTOR = new PWMVictorSPX(7);
 
     // Send the solenoid forward
-    public void forward() 
+    public static void forward() 
     {
         // Set solenoid value
-        Debug.printOnce("Forward!");
-        this.SOLENOID.set(DoubleSolenoid.Value.kForward);
+        SOLENOID.set(DoubleSolenoid.Value.kForward);
     }
 
     // Send the solenoid in reverse
-    public void reverse() 
+    public static void reverse() 
     {
         // Set solenoid value
         Debug.printOnce("Reversed!");
-        this.SOLENOID.set(DoubleSolenoid.Value.kReverse);
+        SOLENOID.set(DoubleSolenoid.Value.kReverse);
     }
 
-    private boolean scanSolenoidButton() 
+    private static boolean scanSolenoidButton() 
     {
         if (OI.PNEU_BACKWARD_BUTTON.isPressed()) reverse();
         if (OI.PNEU_FORWARD_BUTTON.isPressed()) forward();
@@ -53,7 +50,7 @@ public class SolenoidSystem
         return false;
     }
 
-    public void update() {
+    public static void update() {
         scanSolenoidButton();
     }
 }
