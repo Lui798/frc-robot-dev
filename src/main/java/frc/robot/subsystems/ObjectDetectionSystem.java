@@ -43,6 +43,7 @@ public class ObjectDetectionSystem {
         area = ta.getDouble(0.0);           // Target Area (0%-100% of image)
         validTarget = tv.getDouble(0.0);
         tShort = tshort.getDouble(0.0);
+        tLong = tlong.getDouble(0.0);
 
         //post to smart dashboard periodically
         Debug.printOnce("LimelightX: " + xDistFromCH +
