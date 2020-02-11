@@ -53,7 +53,7 @@ public class ObjectDetectionSystem {
 
         // Uncomment to make robot move while seeing ball.
         if (xDistFromCH >= -12 && xDistFromCH  <= 12 &&
-            area <= 6 && area >= 0.03 && 
+            area <= 6 && area >= 0.03 &&          
             validTarget == 1.0) {
             System.out.println("Target within bounds.\n");
             wheelsMotor2.tankDrive(SPEED * 1.16, SPEED);                // This checks if ball is in front of the robot then moves towards it.
@@ -73,8 +73,8 @@ public class ObjectDetectionSystem {
         if (xDistFromCH < -turnDifference && validTarget == 1.0) {
             ballPosition = "Left";
             System.out.println("Ball's Position: " + ballPosition);     // This turns the robot to the left to adjust for when the ball is to its left.
-            wheelsMotor1.tankDrive(SPEED, SPEED * .66);
-            wheelsMotor2.tankDrive(SPEED, SPEED * .66);
+            wheelsMotor1.tankDrive(SPEED, SPEED * .5);
+            wheelsMotor2.tankDrive(SPEED, SPEED * .5);
         } 
         if (xDistFromCH < -turnDifference &&
             xDistFromCH > turnDifference && 
@@ -84,8 +84,6 @@ public class ObjectDetectionSystem {
             wheelsMotor1.stopMotor();
             wheelsMotor2.stopMotor();
         }
-
-        // These two lines move robot forward.
         
     }
 }
