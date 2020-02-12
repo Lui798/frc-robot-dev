@@ -2,22 +2,19 @@ package frc.robot.controls;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-/*
-    Why do I even need to create this class?
-*/
 public class Button
 {
-    private boolean isPressed;
-    private boolean isReleased;
+    boolean isPressed;
+    boolean isReleased;
 
     //Since Joystick.getRawButtonPressed(int code) only gets the button press on a single tick, 
     //isHold checks whether the button is still being held or not.
     //As far as I know, the wpilib does not provide a function to check whether a button is still being held.
     //If they do, delete this class and end my life.
-    private boolean isHold;
+    boolean isHold;
 
-    private int code;
-    private Joystick stick;
+    int code;
+    Joystick stick;
 
     public Button(Joystick stick, int buttonCode)
     {
@@ -64,6 +61,5 @@ public class Button
     {
         return this.isHold;
     }
-    
 
 }

@@ -23,7 +23,7 @@ public class ColorDetectionSystem
     private final Color RED_TARGET = ColorMatch.makeColor(0.525, 0.355, 0.120);
     private final Color YELLOW_TARGET = ColorMatch.makeColor(0.361, 0.524, 0.113);
     private final Color WHITE_TARGET = ColorMatch.makeColor(0.38, 0.18, 0.436);
-    private String colorString;
+    private Colors color;
 
     public ColorDetectionSystem()
     {
@@ -35,42 +35,51 @@ public class ColorDetectionSystem
     }
 
     //Checking if the detected color in the colorString matches the intended color.
-    public boolean isColorMatch(String intendedColor)
+    public boolean isColorMatch(Colors intendedColor)
     {
         runDetection();
-        return intendedColor.equals(colorString);
+        return intendedColor.equals(color);
     }
 
     //Running color detection. Should be in the teleopPeriodic method for automatic update.
     //Setting the detected color to the colorString.
-    public String runDetection()
+    public Colors runDetection()
     { 
         Color detectedColor = m_colorSensor.getColor();
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
         if (match.color == BLUE_TARGET) 
         {
-            colorString = "Blue";
+            color = Colors.Blue;
         } 
         else if (match.color == RED_TARGET) 
         {
-            colorString = "Red";
+            color = Colors.Red;
         } 
         else if (match.color == GREEN_TARGET) 
         {
-            colorString = "Green";
+            color = Colors.Green;
         } 
         else if (match.color == YELLOW_TARGET) 
         {
-            colorString = "Yellow";
+            color = Colors.Yellow;
         } 
         else 
         {
-            colorString = "Unknown";
+            color = Colors.Unknown;
         }
 
-        Debug.printOnce(colorString + ": " + detectedColor.red + ", " + detectedColor.green + ", " + detectedColor.blue);
+        Debug.printOnce(color + ": " + detectedColor.red + ", " + detectedColor.green + ", " + detectedColor.blue);
 
-        return colorString;
+        return color;
+    }
+
+    public enum Colors 
+    {
+        Blue,
+        Red,
+        Green,
+        Yellow,
+        Unknown
     }
 }
