@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import frc.robot.controls.OI;
+import frc.robot.subsystems.ColorDetectionSystem.Colors;
 
 /*
         Idle: motor not doing anything, trying to get a color button input
@@ -30,9 +31,9 @@ public class ColorMotorSystem
     private final int COLOR_AMOUNT = 8;
 
     private int colorsPassed;
-    private String colorSelection;
-    private String currentColor;
-    private String prevColor;
+    private Colors colorSelection;
+    private Colors currentColor;
+    private Colors prevColor;
 
     private MotorStatus status;
 
@@ -40,9 +41,9 @@ public class ColorMotorSystem
     {
         colorsPassed = 0;
         status = MotorStatus.Idle;
-        colorSelection = "";
-        currentColor = "";
-        prevColor = "";
+        colorSelection = Colors.Unknown;
+        currentColor = Colors.Unknown;
+        prevColor = Colors.Unknown;
     }
 
     //Getting 'color' button presses every updates only when motor is idle.
@@ -52,11 +53,11 @@ public class ColorMotorSystem
     {
         if (status == MotorStatus.Idle)
         {
-            if (OI.BLUE_BUTTON.isPressed()) colorSelection = "Blue";
-            else if (OI.RED_BUTTON.isPressed()) colorSelection = "Red";
-            else if (OI.YELLOW_BUTTON.isPressed()) colorSelection = "Yellow";
-            else if (OI.GREEN_BUTTON.isPressed()) colorSelection = "Green";
-            if (!colorSelection.equals("")) 
+            if (OI.BLUE_BUTTON.isPressed()) colorSelection = Colors.Blue;
+            else if (OI.RED_BUTTON.isPressed()) colorSelection = Colors.Red;
+            else if (OI.YELLOW_BUTTON.isPressed()) colorSelection = Colors.Yellow;
+            else if (OI.GREEN_BUTTON.isPressed()) colorSelection = Colors.Green;
+            if (!colorSelection.equals(Colors.Unknown)) 
             {   
             //    System.out.println("COLOR HAVE BEEN SELECTED: " + colorSelection);
             //    System.out.println("BEGIN PREPING FOR MOTOR SPIN...");
@@ -76,7 +77,7 @@ public class ColorMotorSystem
         COLOR_MOTOR.set(1.0);
 
         //If the sensor sees anything other than RGBY ignore it
-        if (!currentColor.equals("Unknown"))
+        if (!currentColor.equals(Colors.Unknown))
         {
             //If the previously detected color is not the same as the current
             if (!prevColor.equals(currentColor))
@@ -106,7 +107,7 @@ public class ColorMotorSystem
         if (COLOR_DETECTION.isColorMatch(colorSelection))
         {
             COLOR_MOTOR.stopMotor();
-            colorSelection = "";
+            colorSelection = Colors.Unknown;
             status = MotorStatus.Idle;
         }
     }
