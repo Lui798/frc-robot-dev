@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.enums.ControlMode;
-
 public class ControlModule
 {
     private static ControlMode mode = ControlMode.Intake;
@@ -14,16 +12,32 @@ public class ControlModule
         return mode == newMode;
     }
 
-    public static void changeMode()
+    public static void changeMode(boolean negative)
     {
-        intMode++;
-        if (intMode == modes.length)
+        if (!negative)
         {
-            mode = modes[0];
+            intMode++;
+            if (intMode <= modes.length)
+            {
+                intMode = 0;
+            }
         }
         else
         {
-            mode = modes[intMode];
+            intMode--;
+            if (intMode < 0)
+            {
+                intMode = modes.length - 1;
+            }
         }
+        mode = modes[intMode];
+    }
+
+    public enum ControlMode
+    {
+        Intake,
+        Shooter,
+        Arm,
+        Conveyor
     }
 }
