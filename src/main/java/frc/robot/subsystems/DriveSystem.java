@@ -23,7 +23,7 @@ public class DriveSystem
     private static final double SPEED_MULTIPLIER = 0.951;
     
     //Pretty obvious what this function does. Run this in the Robot.java teleopPeriodic() function to run the robot.
-    public static void update()
+    public void update()
     {
         wheelsMotor2.tankDrive(-OI.LEFT_STICK.getY() * SPEED_MULTIPLIER, -(OI.RIGHT_STICK.getY() * SPEED_MULTIPLIER));
         wheelsMotor1.tankDrive(-OI.LEFT_STICK.getY() * SPEED_MULTIPLIER, -(OI.RIGHT_STICK.getY() * SPEED_MULTIPLIER));

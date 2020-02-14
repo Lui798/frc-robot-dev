@@ -22,7 +22,6 @@ public class ColorDetectionSystem
     private final Color GREEN_TARGET = ColorMatch.makeColor(0.267, 0.499, 0.240);
     private final Color RED_TARGET = ColorMatch.makeColor(0.525, 0.355, 0.120);
     private final Color YELLOW_TARGET = ColorMatch.makeColor(0.361, 0.524, 0.113);
-    private final Color WHITE_TARGET = ColorMatch.makeColor(0.38, 0.18, 0.436);
     private Colors color;
 
     public ColorDetectionSystem()
@@ -30,8 +29,7 @@ public class ColorDetectionSystem
         m_colorMatcher.addColorMatch(BLUE_TARGET);
         m_colorMatcher.addColorMatch(GREEN_TARGET);
         m_colorMatcher.addColorMatch(RED_TARGET);
-        m_colorMatcher.addColorMatch(YELLOW_TARGET);  
-        m_colorMatcher.addColorMatch(WHITE_TARGET);   
+        m_colorMatcher.addColorMatch(YELLOW_TARGET);
     }
 
     //Checking if the detected color in the colorString matches the intended color.
