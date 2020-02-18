@@ -67,7 +67,7 @@ public class ColorDetectionSystem
             color = Colors.Unknown;
         }
 
-        Debug.printOnce(color + ": " + detectedColor.red + ", " + detectedColor.green + ", " + detectedColor.blue);
+       // Debug.printOnce(color + ": " + detectedColor.red + ", " + detectedColor.green + ", " + detectedColor.blue);
 
         return color;
     }

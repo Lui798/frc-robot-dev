@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -17,16 +15,13 @@ public class ObjectDetectionSystem {
     double tLong;
     private double turnDifference = 7;
     private String ballPosition = "none";
-    private DifferentialDrive wheelsMotor1; //The left... or right motor? At this point, I don't even know.
-    private DifferentialDrive wheelsMotor2; //The opposite of the wheelsMotor1.
     private double SPEED = 0.6; // negative numbers move robot where limelight is looking
 
     public ObjectDetectionSystem() {
-        wheelsMotor1 = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(2));
-        wheelsMotor2 = new DifferentialDrive(new PWMVictorSPX(1), new PWMVictorSPX(3));
     }
 
     public void update() {
+
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry ty = table.getEntry("ty");
@@ -56,33 +51,28 @@ public class ObjectDetectionSystem {
             area <= 3 && area >= 0.03 &&          
             validTarget == 1.0) {
             System.out.println("Target within bounds.\n");
-            wheelsMotor2.tankDrive(SPEED, SPEED);                // This checks if ball is in front of the robot then moves towards it.
-            wheelsMotor1.tankDrive(SPEED, SPEED);
+            DriveSystem.moveWheels(SPEED, SPEED);
         } else {
             System.out.println("Target outside of bounds.\n");
-            wheelsMotor2.stopMotor();
-            wheelsMotor1.stopMotor();
+            DriveSystem.stopWheels();
         }
 
         if (xDistFromCH > turnDifference && validTarget == 1.0) {
             ballPosition = "Right";
-            System.out.println("Ball's Position: " + ballPosition);     // This turns the robot to the right to adjust for when the ball is to its right.
-            wheelsMotor1.tankDrive(SPEED * .66, -SPEED * .66);
-            wheelsMotor2.tankDrive(SPEED * .66, -SPEED * .66);
+            System.out.println("Ball's Position: " + ballPosition);
+            DriveSystem.moveWheels(SPEED * .66, -SPEED * .66);
         }
         if (xDistFromCH < -turnDifference && validTarget == 1.0) {
             ballPosition = "Left";
-            System.out.println("Ball's Position: " + ballPosition);     // This turns the robot to the left to adjust for when the ball is to its left.
-            wheelsMotor1.tankDrive(-SPEED * .66, SPEED * .66);
-            wheelsMotor2.tankDrive(-SPEED * .66, SPEED * .66);
+            System.out.println("Ball's Position: " + ballPosition);
+            DriveSystem.moveWheels(-SPEED * .66, SPEED * .66);
         } 
         if (xDistFromCH < -turnDifference &&
             xDistFromCH > turnDifference && 
             validTarget == 1.0) {
             ballPosition = "Center";
             System.out.println("Ball's Position: " + ballPosition);
-            wheelsMotor1.stopMotor();
-            wheelsMotor2.stopMotor();
+            DriveSystem.stopWheels();
         }
         
     }
