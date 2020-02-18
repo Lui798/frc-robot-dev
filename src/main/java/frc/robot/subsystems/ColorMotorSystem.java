@@ -40,6 +40,7 @@ public class ColorMotorSystem
 
     public ColorMotorSystem()
     {
+        System.out.println("Color motor system initialized!");
         colorsPassed = 0;
         status = MotorStatus.Idle;
         colorSelection = Colors.Unknown;
@@ -55,24 +56,24 @@ public class ColorMotorSystem
         if (OI.BLUE_BUTTON.isPressed()) 
         {
             colorSelection = Colors.Blue;
+            return true;
         } 
         else if (OI.RED_BUTTON.isPressed())
         {
             colorSelection = Colors.Red;
+            return true;
         }
         else if (OI.YELLOW_BUTTON.isPressed()) 
         {
             colorSelection = Colors.Yellow;
+            return true;
         }
         else if (OI.GREEN_BUTTON.isPressed()) 
         {
             colorSelection = Colors.Green;
-        }
-
-        if (!colorSelection.equals(Colors.Unknown))
-        {               
             return true;
         }
+
         return false;
     }
 
@@ -84,6 +85,7 @@ public class ColorMotorSystem
         //System.out.println("Number of Color Passed - " + colorsPassed); //Debugging
         currentColor = COLOR_DETECTION.runDetection();
         COLOR_MOTOR.set(0.5);
+        Debug.printOnce("Spin Three Times: "  + currentColor + ": " + prevColor + ": " + colorsPassed);
 
         //If the sensor sees anything other than RGBY ignore it
         if (!currentColor.equals(Colors.Unknown))
@@ -104,7 +106,6 @@ public class ColorMotorSystem
             }
         }
 
-        Debug.printOnce(currentColor + ": " + prevColor + ": " + colorsPassed);
     }
 
     /*
@@ -130,15 +131,16 @@ public class ColorMotorSystem
     {
         //System.out.println("------------- New Color Motor System Loop ---------------");
         if(scanColorButton()) status = MotorStatus.PrepOnStandby;
-        if(status == MotorStatus.PrepOnStandby)
+        if(status.equals(MotorStatus.PrepOnStandby))
         {
+            System.out.println("PrepOnStandBy");
             colorsPassed = 0;  
             currentColor = COLOR_DETECTION.runDetection();
             prevColor = COLOR_DETECTION.runDetection();
             status = MotorStatus.SpinThreeTimes;
             
         }
-        if (status == MotorStatus.SpinThreeTimes) spinThreeTimes();
-        if (status == MotorStatus.SpinToSelectedColor) spinToColorSeleted();
+        if (status.equals(MotorStatus.SpinThreeTimes)) spinThreeTimes();
+        if (status.equals(MotorStatus.SpinToSelectedColor)) spinToColorSeleted();
     }
 }
