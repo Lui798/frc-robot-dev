@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import frc.robot.controls.OI;
 import frc.robot.subsystems.ColorDetectionSystem.Colors;
+import frc.robot.util.Debug;
 
 /*
         Idle: motor not doing anything, trying to get a color button input
@@ -51,18 +52,26 @@ public class ColorMotorSystem
     //Use in update() function down below. 
     private boolean scanColorButton()
     {
-        if (status == MotorStatus.Idle)
+        if (OI.BLUE_BUTTON.isPressed()) 
         {
-            if (OI.BLUE_BUTTON.isPressed()) colorSelection = Colors.Blue;
-            else if (OI.RED_BUTTON.isPressed()) colorSelection = Colors.Red;
-            else if (OI.YELLOW_BUTTON.isPressed()) colorSelection = Colors.Yellow;
-            else if (OI.GREEN_BUTTON.isPressed()) colorSelection = Colors.Green;
-            if (!colorSelection.equals(Colors.Unknown)) 
-            {   
-            //    System.out.println("COLOR HAVE BEEN SELECTED: " + colorSelection);
-            //    System.out.println("BEGIN PREPING FOR MOTOR SPIN...");
-                return true;
-            }
+            colorSelection = Colors.Blue;
+        } 
+        else if (OI.RED_BUTTON.isPressed())
+        {
+            colorSelection = Colors.Red;
+        }
+        else if (OI.YELLOW_BUTTON.isPressed()) 
+        {
+            colorSelection = Colors.Yellow;
+        }
+        else if (OI.GREEN_BUTTON.isPressed()) 
+        {
+            colorSelection = Colors.Green;
+        }
+
+        if (!colorSelection.equals(Colors.Unknown))
+        {               
+            return true;
         }
         return false;
     }
@@ -74,7 +83,7 @@ public class ColorMotorSystem
         //System.out.println(currentColor);
         //System.out.println("Number of Color Passed - " + colorsPassed); //Debugging
         currentColor = COLOR_DETECTION.runDetection();
-        COLOR_MOTOR.set(1.0);
+        COLOR_MOTOR.set(0.5);
 
         //If the sensor sees anything other than RGBY ignore it
         if (!currentColor.equals(Colors.Unknown))
@@ -83,6 +92,7 @@ public class ColorMotorSystem
             if (!prevColor.equals(currentColor))
             {
                 colorsPassed++;
+              //  System.out.println(colorsPassed);
                 prevColor = currentColor;
             }
             //If it has spun 3.5 times (passing 28 colors), stop it
@@ -93,6 +103,8 @@ public class ColorMotorSystem
                 status = MotorStatus.SpinToSelectedColor;
             }
         }
+
+        Debug.printOnce(currentColor + ": " + prevColor + ": " + colorsPassed);
     }
 
     /*
@@ -102,7 +114,8 @@ public class ColorMotorSystem
         Used in update() function down below.
     */
     private void spinToColorSeleted()
-    {
+    { 
+        Debug.printOnce("Spin to color selected!");
         COLOR_MOTOR.set(1.0);
         if (COLOR_DETECTION.isColorMatch(colorSelection))
         {
@@ -123,7 +136,7 @@ public class ColorMotorSystem
             currentColor = COLOR_DETECTION.runDetection();
             prevColor = COLOR_DETECTION.runDetection();
             status = MotorStatus.SpinThreeTimes;
-          //  System.out.println("SPIN_3_TIMES ACTION INITIATED!");
+            
         }
         if (status == MotorStatus.SpinThreeTimes) spinThreeTimes();
         if (status == MotorStatus.SpinToSelectedColor) spinToColorSeleted();

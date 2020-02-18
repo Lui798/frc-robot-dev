@@ -12,7 +12,7 @@ public class Trigger extends Button
     @Override
     public void setStates()
     {
-        isPressed = stick.getRawAxis(code) == 1 ? true : false;
+        isPressed = stick.getRawAxis(code) == 1 ? isHold ? false : true : false;
         //isPressed = stick.getRawButtonPressed(code);
         //isReleased = stick.getRawButtonReleased(code);
         
