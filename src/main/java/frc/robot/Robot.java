@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.controls.OI;
+import frc.robot.subsystems.ObjectDetectionSystem;
 import frc.robot.subsystems.ColorMotorSystem;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.SolenoidSystem;
@@ -20,18 +21,17 @@ import frc.robot.subsystems.SolenoidSystem;
 */
 public class Robot extends TimedRobot 
 {
-  SolenoidSystem solenoidSystem;
-  DriveSystem driveSystem;
   ColorMotorSystem colorMotorSystem;
- // ObjectDetectionSystem objectDetectionSystem;
+  ObjectDetectionSystem objectDetectionSystem;
+  DriveSystem driveSystem;
 
   @Override
   public void robotInit() 
   {
-    //objectDetectionSystem = new ObjectDetectionSystem();
-    driveSystem = new DriveSystem();
+
+    objectDetectionSystem = new ObjectDetectionSystem();
     colorMotorSystem = new ColorMotorSystem();
-    solenoidSystem = new SolenoidSystem();
+    // solenoidSystem = new SolenoidSystem();
   }
 
   //An automatic update method, provided by WPILIB
@@ -40,9 +40,10 @@ public class Robot extends TimedRobot
   public void teleopPeriodic() 
   {
     OI.update();
-    driveSystem.update();
-    colorMotorSystem.update();
-    solenoidSystem.update();
-    //objectDetectionSystem.update();
+
+    // driveSystem.update();
+   // colorMotorSystem.update();
+    // solenoidSystem.update();
+    objectDetectionSystem.update();
   }
 }
